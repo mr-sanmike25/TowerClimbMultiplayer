@@ -60,7 +60,7 @@ public class PlayerController : MonoBehaviour
     #region LocalMethods
     private void PlayerMovement()
     {
-        if (m_PV.IsMine)
+        if (m_PV.IsMine && LevelNetworkManager.Instance.PlayerCanMove)
         {
             float m_movementX = Input.GetAxisRaw("Horizontal");
 

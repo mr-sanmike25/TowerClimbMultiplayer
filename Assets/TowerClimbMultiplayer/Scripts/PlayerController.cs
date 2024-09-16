@@ -55,6 +55,14 @@ public class PlayerController : MonoBehaviour
                 break;
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("LowerLimits"))
+        {
+            
+        }
+    }
     #endregion
 
     #region LocalMethods
@@ -82,7 +90,7 @@ public class PlayerController : MonoBehaviour
 
     private void PlayerJump()
     {
-        if(m_PV.IsMine)
+        if(m_PV.IsMine && LevelNetworkManager.Instance.PlayerCanMove)
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {

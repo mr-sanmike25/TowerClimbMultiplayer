@@ -15,6 +15,8 @@ public class LevelNetworkManager : MonoBehaviourPunCallbacks
     [SerializeField] private bool playerCanMove;
     [SerializeField] float remainingTimeToStart = 3.0f;
 
+    [SerializeField] GameObject[] platforms;
+
     #endregion
 
     #region RuntimeVariables
@@ -43,7 +45,7 @@ public class LevelNetworkManager : MonoBehaviourPunCallbacks
 
     private void Update()
     {
-        if (PhotonNetwork.CurrentRoom.PlayerCount >= 2)
+        if (PhotonNetwork.CurrentRoom.PlayerCount >= 4)
         {
             Timer();
 

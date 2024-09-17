@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour
         m_PV = GetComponent<PhotonView>();
         m_rb2D = GetComponent<Rigidbody2D>();
         myAnim = GetComponent<Animator>();
-        m_PV.Owner.NickName = PhotonNetwork.NickName;
+        //m_PV.Owner.NickName = PhotonNetwork.NickName;
     }
 
     void Update()

@@ -49,7 +49,7 @@ public class LevelNetworkManager : MonoBehaviourPunCallbacks
 
     private void Update()
     {
-        if (PhotonNetwork.CurrentRoom.PlayerCount >= 4)
+        if (PhotonNetwork.CurrentRoom.PlayerCount >= 2)
         {
             Timer();
 

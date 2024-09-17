@@ -8,23 +8,28 @@ public class PlayerNicknameCode : MonoBehaviour
 {
     PhotonView m_PV;
 
+    [SerializeField] TextMeshPro m_nickname;
+
     private void Start()
     {
         m_PV = GetComponent<PhotonView>();
-        m_PV.Owner.NickName = PhotonNetwork.NickName;
-        ShowNickname();
+        //m_PV.Owner.NickName = PhotonNetwork.NickName;
+        m_nickname.text = m_PV.Owner.NickName;
+        //ShowNickname();
+        //m_PV.RPC("ShowNickname", RpcTarget.AllBuffered, m_PV.Owner.NickName);
     }
 
     private void Update()
     {
-        ShowNickname();
+        //ShowNickname();
     }
 
-    void ShowNickname()
+    //[PunRPC]
+    void ShowNickname(string p_nickname)
     {
-        if (m_PV.IsMine)
+        if(m_PV.IsMine)
         {
-            gameObject.GetComponentInChildren<TextMeshPro>().text = m_PV.Owner.NickName;
+            gameObject.GetComponentInChildren<TextMeshPro>().text = p_nickname;
         }
     }
 }

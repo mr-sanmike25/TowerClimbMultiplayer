@@ -82,6 +82,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if ((collision.collider.CompareTag("InitialPlatform")) && (LevelNetworkManager.Instance.PlayerCanMove))
+        {
+            canJump = true;
+        }
+    }
+
     #endregion
 
     #region LocalMethods

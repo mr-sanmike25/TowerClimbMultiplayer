@@ -57,9 +57,9 @@ public class PlatformCode : MonoBehaviour
                     break;
             }
         }
-        if (collision.collider.CompareTag("Platform"))
+        if (collision.collider.CompareTag("InitialPlatform"))
         {
-            collision.gameObject.SetActive(false);
+            Destroy(collision.gameObject);
         }
     }
 }

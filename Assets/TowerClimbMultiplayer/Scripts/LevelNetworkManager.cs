@@ -42,6 +42,10 @@ public class LevelNetworkManager : MonoBehaviourPunCallbacks
             Destroy(Instance);
         }
     }
+    private void Start()
+    {
+        //InvokeRepeating("PlatformsSpawnFunction", 1.25f, 1.25f);
+    }
 
     private void Update()
     {
@@ -49,9 +53,12 @@ public class LevelNetworkManager : MonoBehaviourPunCallbacks
         {
             Timer();
 
-            if ((RemainingTime <= 0.0f) && (!PlayerCanMove))
+            if (RemainingTime <= 0.0f)
             {
-                m_PV.RPC("ActivateMovements", RpcTarget.AllBuffered);
+                if (!PlayerCanMove)
+                {
+                    m_PV.RPC("ActivateMovements", RpcTarget.AllBuffered);
+                }
             }
         }
     }
@@ -94,4 +101,31 @@ public class LevelNetworkManager : MonoBehaviourPunCallbacks
     {
         print("Salió el player: " + otherPlayer.NickName);
     }
+
+    //[PunRPC]
+    //void PlatformsFunction()
+    //{
+        /*int randomPlatform = UnityEngine.Random.Range(0, platforms.Length);
+        int randomXPos = UnityEngine.Random.Range(-9, 7);
+        Vector2 platformSpawnPos = new Vector2(randomXPos, 15.0f);*/
+
+        /*Vector2 platformPos1 = new Vector2(-9, 15.0f);
+        Vector2 platformPos2 = new Vector2(-2, 15.0f);
+        Vector2 platformPos3 = new Vector2(4.5f, 15.0f);*/
+
+        //Instantiate(platforms[randomPlatform], platformSpawnPos, Quaternion.identity);
+
+        /*Instantiate(platforms[0], platformPos1, Quaternion.identity);
+        Instantiate(platforms[1], platformPos2, Quaternion.identity);
+        Instantiate(platforms[2], platformPos3, Quaternion.identity);*/
+    //}
+
+    /*void PlatformsSpawnFunction()
+    {
+        if ((PhotonNetwork.CurrentRoom.PlayerCount >= 4) && remainingTimeToStart <= 0.0f)
+        {
+            print("PlatformsSpawnFunction");
+            m_PV.RPC("PlatformsFunction", RpcTarget.AllBuffered);
+        }
+    }*/
 }

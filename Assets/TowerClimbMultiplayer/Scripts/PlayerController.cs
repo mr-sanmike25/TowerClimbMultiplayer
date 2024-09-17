@@ -17,13 +17,14 @@ public class PlayerController : MonoBehaviour
 {
     /// Date: 11/09/2024
     /// Author: Miguel Angel Garcia Elizalde y Alan Elias Carpinteyro Gastelum.
-    /// Brief: Código del jugador y sus distintos comportamientos, como lo es el movimiento.
+    /// Brief: Cï¿½digo del jugador y sus distintos comportamientos, como lo es el movimiento.
 
     #region Variables
     public playerStates playerCurrentState;
 
     [SerializeField] int m_speed;
     [SerializeField] int m_jumpForce;
+    [SerializeField] bool canJump;
 
     Rigidbody2D m_rb2D;
     Animator myAnim;
@@ -36,11 +37,22 @@ public class PlayerController : MonoBehaviour
         m_PV = GetComponent<PhotonView>();
         m_rb2D = GetComponent<Rigidbody2D>();
         myAnim = GetComponent<Animator>();
+        m_PV.Owner.NickName = PhotonNetwork.NickName;
     }
 
     void Update()
     {
         PlayerJump();
+
+        /*switch (playerCurrentState)
+        {
+            case playerStates.IDLE:
+                PlayerMovement();
+                break;
+            case playerStates.MOVING:
+                PlayerMovement();
+                break;
+        }*/
     }
 
     private void FixedUpdate()
@@ -56,13 +68,20 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.CompareTag("LowerLimits"))
+        if (collision.collider.CompareTag("Death"))
         {
-            
+            UIManager.Instance.getNewInfoGame(m_PV.Owner.NickName);
+            m_speed = 0;
+            canJump = false;
+        }
+        if (collision.collider.CompareTag("Platform"))
+        {
+            canJump = true;
         }
     }
+
     #endregion
 
     #region LocalMethods
@@ -90,11 +109,12 @@ public class PlayerController : MonoBehaviour
 
     private void PlayerJump()
     {
-        if(m_PV.IsMine && LevelNetworkManager.Instance.PlayerCanMove)
+        if(m_PV.IsMine && LevelNetworkManager.Instance.PlayerCanMove && canJump)
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 m_rb2D.AddForce(Vector2.up * m_jumpForce, ForceMode2D.Impulse);
+                canJump = false;
             }
         }
     }

@@ -5,6 +5,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine.UI;
 using TMPro;
+using WebSocketSharp;
 
 public class PhotonConnection : MonoBehaviourPunCallbacks
 {
@@ -94,7 +95,7 @@ public class PhotonConnection : MonoBehaviourPunCallbacks
 
     public void joinVSDefaultRoom()
     {
-        if (m_newNickname.text == "")
+        if (m_newNickname.text.IsNullOrEmpty())
         {
             m_nicknameFailedTextMeshProUGUI.gameObject.SetActive(true);
             m_nicknameFailedTextMeshProUGUI.text = "Introduce un nombre, no lo dejes en blanco.";
@@ -122,7 +123,7 @@ public class PhotonConnection : MonoBehaviourPunCallbacks
 
     public void createVSDefaultRoom()
     {
-        if (m_newNickname.text == "")
+        if (m_newNickname.text.IsNullOrEmpty())
         {
             m_nicknameFailedTextMeshProUGUI.gameObject.SetActive(true);
             m_nicknameFailedTextMeshProUGUI.text = "Introduce un nombre, no lo dejes en blanco.";
@@ -150,7 +151,7 @@ public class PhotonConnection : MonoBehaviourPunCallbacks
 
     public void JoinCoopDefaultRoom()
     {
-        if (m_newNickname.text == "")
+        if (m_newNickname.text.IsNullOrEmpty())
         {
             m_nicknameFailedTextMeshProUGUI.gameObject.SetActive(true);
             m_nicknameFailedTextMeshProUGUI.text = "Introduce un nombre, no lo dejes en blanco.";
@@ -178,7 +179,7 @@ public class PhotonConnection : MonoBehaviourPunCallbacks
 
     public void CreateCoopDefaultRoom()
     {
-        if (m_newNickname.text == "")
+        if (m_newNickname.text.IsNullOrEmpty())
         {
             m_nicknameFailedTextMeshProUGUI.gameObject.SetActive(true);
             m_nicknameFailedTextMeshProUGUI.text = "Introduce un nombre, no lo dejes en blanco.";
@@ -206,8 +207,10 @@ public class PhotonConnection : MonoBehaviourPunCallbacks
 
     public void PlayButton()
     {
-        if(m_newNickname.text != "")
+        if(!m_newNickname.text.IsNullOrEmpty())
         {
+            m_nicknameFailedTextMeshProUGUI.gameObject.SetActive(false);
+
             m_menuModePanel.SetActive(false);
             m_selectModePanel.SetActive(true);
 
@@ -222,6 +225,7 @@ public class PhotonConnection : MonoBehaviourPunCallbacks
         }
         else
         {
+            m_nicknameFailedTextMeshProUGUI.gameObject.SetActive(true);
             m_nicknameFailedTextMeshProUGUI.text = "Introduce un nombre, no lo dejes en blanco.";
             return;
         }

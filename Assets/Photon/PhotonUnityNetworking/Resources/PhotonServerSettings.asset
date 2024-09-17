@@ -42,6 +42,11 @@ MonoBehaviour:
   - showNewGameInfo
   - ActivateMovements
   - spawnNewEnemy
+  - PlatformsSpawnFunction
+  - ShowNickname
+  - showNick
+  - ShowNick
+  - PlatformsFunction
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0

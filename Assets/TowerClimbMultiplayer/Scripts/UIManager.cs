@@ -49,11 +49,6 @@ public class UIManager : MonoBehaviour
         LevelNetworkManager.Instance.disconnectFromCurrentRoom();
     }
 
-    public void addPoints()
-    {
-        m_PV.RPC("addPointsInUI", RpcTarget.AllBuffered, 5);
-    }
-
     public void getNewInfoGame(string p_playerInfo)
     {
         m_PV.RPC("showNewGameInfo", RpcTarget.All, p_playerInfo);

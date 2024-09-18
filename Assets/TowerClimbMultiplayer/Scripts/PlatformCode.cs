@@ -40,7 +40,7 @@ public class PlatformCode : MonoBehaviour
     {
         if (collision.collider.CompareTag("Death"))
         {
-            Vector2 platformPos1 = new Vector2(-9, 15.0f);
+            /*Vector2 platformPos1 = new Vector2(-9, 15.0f);
             Vector2 platformPos2 = new Vector2(-2, 15.0f);
             Vector2 platformPos3 = new Vector2(4.5f, 15.0f);
 
@@ -55,11 +55,13 @@ public class PlatformCode : MonoBehaviour
                 case PlatformType.C:
                     transform.position = platformPos3;
                     break;
-            }
+            }*/
+
+            //Destroy(gameObject);
         }
         if (collision.collider.CompareTag("InitialPlatform"))
         {
-            Destroy(collision.gameObject);
+            //Destroy(collision.gameObject);
         }
     }
 }

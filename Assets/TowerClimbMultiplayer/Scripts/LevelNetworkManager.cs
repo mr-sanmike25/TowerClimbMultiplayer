@@ -17,6 +17,13 @@ public class LevelNetworkManager : MonoBehaviourPunCallbacks
 
     [SerializeField] GameObject[] platforms;
 
+    [SerializeField] List<string> m_players = new List<string>();
+
+    [SerializeField] int m_playersCount = 0;
+
+    public List<string> Players { get => m_players; set => m_players = value; }
+    public int PlayersCount { get => m_playersCount; set => m_playersCount = value; }
+
     #endregion
 
     #region RuntimeVariables
@@ -79,7 +86,10 @@ public class LevelNetworkManager : MonoBehaviourPunCallbacks
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
+        UIManager.Instance.getNewPlayer(newPlayer.NickName);
         print("Entró nuevo player: " + newPlayer.NickName);
+        //PlayersWinnerManager.Instance.PlayersCount++;
+        //PlayersWinnerManager.Instance.Players.Add(newPlayer.NickName);
     }
 
     [PunRPC]
@@ -100,24 +110,25 @@ public class LevelNetworkManager : MonoBehaviourPunCallbacks
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         print("Salió el player: " + otherPlayer.NickName);
+        //PlayersWinnerManager.Instance.PlayersCount--;
     }
 
     //[PunRPC]
     //void PlatformsFunction()
     //{
-        /*int randomPlatform = UnityEngine.Random.Range(0, platforms.Length);
-        int randomXPos = UnityEngine.Random.Range(-9, 7);
-        Vector2 platformSpawnPos = new Vector2(randomXPos, 15.0f);*/
+    /*int randomPlatform = UnityEngine.Random.Range(0, platforms.Length);
+    int randomXPos = UnityEngine.Random.Range(-9, 7);
+    Vector2 platformSpawnPos = new Vector2(randomXPos, 15.0f);*/
 
-        /*Vector2 platformPos1 = new Vector2(-9, 15.0f);
-        Vector2 platformPos2 = new Vector2(-2, 15.0f);
-        Vector2 platformPos3 = new Vector2(4.5f, 15.0f);*/
+    /*Vector2 platformPos1 = new Vector2(-9, 15.0f);
+    Vector2 platformPos2 = new Vector2(-2, 15.0f);
+    Vector2 platformPos3 = new Vector2(4.5f, 15.0f);*/
 
-        //Instantiate(platforms[randomPlatform], platformSpawnPos, Quaternion.identity);
+    //Instantiate(platforms[randomPlatform], platformSpawnPos, Quaternion.identity);
 
-        /*Instantiate(platforms[0], platformPos1, Quaternion.identity);
-        Instantiate(platforms[1], platformPos2, Quaternion.identity);
-        Instantiate(platforms[2], platformPos3, Quaternion.identity);*/
+    /*Instantiate(platforms[0], platformPos1, Quaternion.identity);
+    Instantiate(platforms[1], platformPos2, Quaternion.identity);
+    Instantiate(platforms[2], platformPos3, Quaternion.identity);*/
     //}
 
     /*void PlatformsSpawnFunction()

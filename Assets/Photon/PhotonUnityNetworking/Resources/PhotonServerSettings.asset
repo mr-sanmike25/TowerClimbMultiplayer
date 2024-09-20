@@ -47,6 +47,13 @@ MonoBehaviour:
   - showNick
   - ShowNick
   - PlatformsFunction
+  - showNewPlayer
+  - AddNewPlayerRPC
+  - showVictoryPlayer
+  - callAddPlayersCoroutine
+  - DeletePlayerFromWinnerList
+  - DeletePlayerRPC
+  - DeletePlayerFromWinnerListRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0

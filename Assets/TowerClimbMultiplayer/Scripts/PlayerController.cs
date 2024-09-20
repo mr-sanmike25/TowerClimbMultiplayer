@@ -29,15 +29,21 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D m_rb2D;
     Animator myAnim;
     PhotonView m_PV;
+    SpriteRenderer m_spriteRenderer;
     #endregion
 
     #region UnityMethods
+
     void Start()
     {
         m_PV = GetComponent<PhotonView>();
         m_rb2D = GetComponent<Rigidbody2D>();
         myAnim = GetComponent<Animator>();
-        //m_PV.Owner.NickName = PhotonNetwork.NickName;
+        m_spriteRenderer = GetComponent<SpriteRenderer>();
+        //m_PV.Owner.NickName = PhotonNetwork.NickName; // NO PEDIRLO NUNCA MÁS DE UNA VEZ.
+        gameObject.name = m_PV.Owner.NickName;
+        PlayersWinnerManager.Instance.Players.Add(m_PV.Owner.NickName);
+        PlayersWinnerManager.Instance.PlayersCount++;
     }
 
     void Update()
@@ -75,6 +81,8 @@ public class PlayerController : MonoBehaviour
             UIManager.Instance.getNewInfoGame(m_PV.Owner.NickName);
             m_speed = 0;
             canJump = false;
+            m_spriteRenderer.enabled = false;
+            PlayersWinnerManager.Instance.DeletePlayerFromWinnerList(m_PV.Owner.NickName);
         }
         if (collision.collider.CompareTag("Platform"))
         {

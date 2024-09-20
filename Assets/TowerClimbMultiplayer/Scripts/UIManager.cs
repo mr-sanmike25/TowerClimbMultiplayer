@@ -59,4 +59,29 @@ public class UIManager : MonoBehaviour
     {
         m_gameInfo.text = "El jugador: " + p_name + " ha quedado eliminado";
     }
+
+    public void getNewPlayer(string p_playerInfo)
+    {
+        m_PV.RPC("showNewPlayer", RpcTarget.All, p_playerInfo);
+    }
+
+    [PunRPC]
+    void showNewPlayer(string p_name)
+    {
+        m_gameInfo.text = "El jugador: " + p_name + " se ha unido a la partida";
+    }
+
+    public void getVictoryPlayer(string p_playerInfo)
+    {
+        m_PV.RPC("showVictoryPlayer", RpcTarget.All, p_playerInfo);
+    }
+
+    [PunRPC]
+    void showVictoryPlayer(string p_name)
+    {
+        if((PhotonNetwork.CurrentRoom.PlayerCount >= 2) && (LevelNetworkManager.Instance.RemainingTime <= 0) && (LevelNetworkManager.Instance.PlayersCount <= 1))
+        {
+            m_gameInfo.text = "El jugador: " + p_name + " ha ganado la partida";
+        }
+    }
 }

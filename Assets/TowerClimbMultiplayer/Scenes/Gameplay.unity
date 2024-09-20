@@ -429,6 +429,8 @@ MonoBehaviour:
   - {fileID: 5987236186459019914, guid: 213a14821b8931542a27bfcf79c1ed14, type: 3}
   - {fileID: 8321803415537588748, guid: 4174ebb238781254b98c2e5a9266a294, type: 3}
   - {fileID: 8321803415537588748, guid: 71fcf41673e0f694d97690ee2265de43, type: 3}
+  m_players: []
+  m_playersCount: 0
 --- !u!114 &503119714
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20145,6 +20147,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1392880966}
   - component: {fileID: 1392880965}
+  - component: {fileID: 1392880967}
   m_Layer: 7
   m_Name: Death
   m_TagString: Death
@@ -20212,6 +20215,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1392880967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1392880964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 18
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &1397809047
 GameObject:
   m_ObjectHideFlags: 0
@@ -20259,6 +20284,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_TimerText: {fileID: 2089411396}
   m_gameInfo: {fileID: 1953948482}
+  m_deletedPlayer: 
 --- !u!114 &1397809050
 MonoBehaviour:
   m_ObjectHideFlags: 0

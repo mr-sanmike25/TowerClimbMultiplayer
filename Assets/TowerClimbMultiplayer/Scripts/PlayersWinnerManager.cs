@@ -43,7 +43,7 @@ public class PlayersWinnerManager : MonoBehaviour
 
     void Update()
     {
-        if (PhotonNetwork.CurrentRoom.PlayerCount >= 2)
+        if ((PhotonNetwork.CurrentRoom.PlayerCount >= 2) && (LevelNetworkManager.Instance.PlayerCanMove))
         {
             CheckPlayerWhoWon();
             /*if (!addPlayersBool)
@@ -123,10 +123,11 @@ public class PlayersWinnerManager : MonoBehaviour
 
     void CheckPlayerWhoWon()
     {
-        if((m_playersCount <= 2) && (LevelNetworkManager.Instance.RemainingTime <= 0) && (PlayersCount <= 1))
+        if((LevelNetworkManager.Instance.RemainingTime <= 0) && (Players.Count <= 1) && (PlayersCount <= 1) && (LevelNetworkManager.Instance.PlayerCanMove))
         {
             print(Players[0]);
             UIManager.Instance.getVictoryPlayer(Players[0]);
+            Time.timeScale = 0.0f;
         }
     }
 }

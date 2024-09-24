@@ -79,9 +79,6 @@ public class UIManager : MonoBehaviour
     [PunRPC]
     void showVictoryPlayer(string p_name)
     {
-        if((PhotonNetwork.CurrentRoom.PlayerCount >= 2) && (LevelNetworkManager.Instance.RemainingTime <= 0) && (LevelNetworkManager.Instance.PlayersCount <= 1))
-        {
-            m_gameInfo.text = "El jugador: " + p_name + " ha ganado la partida";
-        }
+        m_gameInfo.text = "El jugador: " + p_name + " ha ganado la partida";
     }
 }

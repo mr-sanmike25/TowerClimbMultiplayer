@@ -43,7 +43,6 @@ public class PlayerController : MonoBehaviour
         //m_PV.Owner.NickName = PhotonNetwork.NickName; // NO PEDIRLO NUNCA MÁS DE UNA VEZ.
         gameObject.name = m_PV.Owner.NickName;
         PlayersWinnerManager.Instance.Players.Add(m_PV.Owner.NickName);
-        PlayersWinnerManager.Instance.PlayersCount++;
     }
 
     void Update()

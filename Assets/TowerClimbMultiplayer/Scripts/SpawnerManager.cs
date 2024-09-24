@@ -20,7 +20,7 @@ public class SpawnerManager : MonoBehaviour
         if (m_PV.IsMine)
         {
             PhotonNetwork.Instantiate("SpawnPlatforms", transform.position, Quaternion.identity);
-            PhotonNetwork.Instantiate("PlayersWinnerManager", new Vector3(-1.03999996f, -19.5f, 0.0f), Quaternion.identity);
+            PhotonNetwork.Instantiate("PlayersWinnerManager", transform.position, Quaternion.identity);
         }
     }
 }

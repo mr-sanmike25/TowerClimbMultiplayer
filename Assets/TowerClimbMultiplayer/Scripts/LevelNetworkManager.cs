@@ -76,7 +76,8 @@ public class LevelNetworkManager : MonoBehaviourPunCallbacks
     }
     public override void OnLeftRoom()
     {
-        PhotonNetwork.LoadLevel("Menu");
+        PlayersWinnerManager.Instance.DeletePlayerFromWinnerList(m_PV.Owner.NickName);
+        Application.Quit();
     }
 
     public override void OnDisconnected(DisconnectCause cause)

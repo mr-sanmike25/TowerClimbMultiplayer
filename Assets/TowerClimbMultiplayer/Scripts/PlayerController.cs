@@ -22,9 +22,12 @@ public class PlayerController : MonoBehaviour
     #region Variables
     public playerStates playerCurrentState;
 
+    [SerializeField] GameObject punchTrigger;
+    [SerializeField] float punchForce;
+
     [SerializeField] int m_speed;
     [SerializeField] int m_jumpForce;
-    [SerializeField] bool canJump;
+    [SerializeField] bool canJump, receiveDamageBool, canPunch;
 
     Rigidbody2D m_rb2D;
     Animator myAnim;
@@ -42,12 +45,15 @@ public class PlayerController : MonoBehaviour
         m_spriteRenderer = GetComponent<SpriteRenderer>();
         //m_PV.Owner.NickName = PhotonNetwork.NickName; // NO PEDIRLO NUNCA MÁS DE UNA VEZ.
         gameObject.name = m_PV.Owner.NickName;
+        punchTrigger.name = m_PV.Owner.NickName;
         PlayersWinnerManager.Instance.Players.Add(m_PV.Owner.NickName);
+        canPunch = true;
     }
 
     void Update()
     {
         PlayerJump();
+        m_PV.RPC("PlayerAttack", RpcTarget.AllBuffered);
 
         /*switch (playerCurrentState)
         {
@@ -97,6 +103,16 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.CompareTag("PlayerPunch"))
+        {
+            ReceiveDamage(punchForce, collision);
+            m_PV.RPC("Punching", RpcTarget.AllBuffered, collision.name);
+            UIManager.Instance.recivedDamageToPlayer(m_PV.Owner.NickName);
+        }
+    }
+
     #endregion
 
     #region LocalMethods
@@ -124,7 +140,7 @@ public class PlayerController : MonoBehaviour
 
     private void PlayerJump()
     {
-        if(m_PV.IsMine && LevelNetworkManager.Instance.PlayerCanMove && canJump)
+        if (m_PV.IsMine && LevelNetworkManager.Instance.PlayerCanMove && canJump)
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
@@ -132,6 +148,56 @@ public class PlayerController : MonoBehaviour
                 canJump = false;
             }
         }
+    }
+
+    public void ReceiveDamage(float punchForce, Collider2D enemyPlayer)
+    {
+        if (m_PV.IsMine)
+        {
+            Vector2 backwardMovementPos = transform.position - enemyPlayer.transform.position;
+
+            m_rb2D.AddForce(backwardMovementPos.normalized * punchForce, ForceMode2D.Impulse);
+        }
+    }
+
+    [PunRPC]
+    void Punching(string enemyPlayerName)
+    {
+        print(enemyPlayerName + " ha golpeado a " + m_PV.Owner.NickName);
+    }
+
+    [PunRPC]
+    void PlayerAttack()
+    {
+        if (m_PV.IsMine && LevelNetworkManager.Instance.PlayerCanMove)
+        {
+            if (Input.GetKeyDown(KeyCode.D))
+            {
+                punchTrigger.transform.localPosition = new Vector2(1.5f, 0.0f);
+            }
+            else if (Input.GetKeyDown(KeyCode.A))
+            {
+                punchTrigger.transform.localPosition = new Vector2(-1.5f, 0.0f);
+            }
+
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                canPunch = false;
+                punchTrigger.SetActive(true);
+            }
+
+            if (!canPunch)
+            {
+                StartCoroutine(PunchTimer());
+            }
+        }
+    }
+
+    IEnumerator PunchTimer()
+    {
+        yield return new WaitForSeconds(0.5f);
+        punchTrigger.SetActive(false);
+        canPunch = true;
     }
     #endregion
 }

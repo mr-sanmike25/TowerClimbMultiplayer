@@ -54,7 +54,7 @@ public class PlayersWinnerManager : MonoBehaviour
         {
             print(Players[0]);
             UIManager.Instance.getVictoryPlayer(Players[0]);
-            Time.timeScale = 0.0f;
+            //Time.timeScale = 0.0f;
         }
     }
 }

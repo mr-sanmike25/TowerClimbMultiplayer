@@ -81,4 +81,15 @@ public class UIManager : MonoBehaviour
     {
         m_gameInfo.text = "El jugador: " + p_name + " ha ganado la partida";
     }
+
+    public void recivedDamageToPlayer(string p_playerInfo)
+    {
+        m_PV.RPC("recivedDamageToPlayerRPC", RpcTarget.All, p_playerInfo);
+    }
+
+    [PunRPC]
+    void recivedDamageToPlayerRPC(string p_name)
+    {
+        m_gameInfo.text = "El jugador: " + p_name + " ha recibido daño";
+    }
 }

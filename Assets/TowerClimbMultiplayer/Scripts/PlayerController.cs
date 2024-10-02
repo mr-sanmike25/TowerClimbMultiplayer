@@ -53,7 +53,8 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         PlayerJump();
-        m_PV.RPC("PlayerAttack", RpcTarget.AllBuffered);
+        PlayerAttack();
+        //m_PV.RPC("PlayerAttack", RpcTarget.AllBuffered);
 
         /*switch (playerCurrentState)
         {
@@ -107,9 +108,12 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.CompareTag("PlayerPunch"))
         {
-            ReceiveDamage(punchForce, collision);
-            m_PV.RPC("Punching", RpcTarget.AllBuffered, collision.name);
-            UIManager.Instance.recivedDamageToPlayer(m_PV.Owner.NickName);
+            if (m_PV.IsMine)
+            {
+                ReceiveDamage(punchForce, collision);
+                Punching(collision.name);
+                UIManager.Instance.recivedDamageToPlayer(m_PV.Owner.NickName);
+            }
         }
     }
 
@@ -160,13 +164,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    [PunRPC]
     void Punching(string enemyPlayerName)
     {
         print(enemyPlayerName + " ha golpeado a " + m_PV.Owner.NickName);
     }
 
-    [PunRPC]
     void PlayerAttack()
     {
         if (m_PV.IsMine && LevelNetworkManager.Instance.PlayerCanMove)

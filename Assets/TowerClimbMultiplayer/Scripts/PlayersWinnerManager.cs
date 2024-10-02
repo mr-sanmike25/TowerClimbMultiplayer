@@ -17,7 +17,6 @@ public class PlayersWinnerManager : MonoBehaviour
 
     private void Awake()
     {
-
         if (Instance == null)
         {
             Instance = this;
@@ -50,7 +49,7 @@ public class PlayersWinnerManager : MonoBehaviour
 
     void CheckPlayerWhoWon()
     {
-        if((LevelNetworkManager.Instance.RemainingTime <= 0) && (Players.Count <= 1))
+        if((LevelNetworkManager.Instance.RemainingTime <= 0) && (Players.Count <= 1) && LevelNetworkManager.Instance.PlayerCanMove)
         {
             print(Players[0]);
             UIManager.Instance.getVictoryPlayer(Players[0]);

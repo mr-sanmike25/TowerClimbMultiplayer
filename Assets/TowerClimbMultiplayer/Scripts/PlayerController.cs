@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using TMPro;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
+using Photon.Realtime;
+using ExitGames.Client.Photon;
 
 #region Enums
 public enum playerStates
@@ -13,7 +16,7 @@ public enum playerStates
 #endregion
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviourPunCallbacks
 {
     /// Date: 11/09/2024
     /// Author: Miguel Angel Garcia Elizalde y Alan Elias Carpinteyro Gastelum.
@@ -48,12 +51,20 @@ public class PlayerController : MonoBehaviour
         punchTrigger.name = m_PV.Owner.NickName;
         PlayersWinnerManager.Instance.Players.Add(m_PV.Owner.NickName);
         canPunch = true;
+
+        PhotonPeer.RegisterType(typeof(Color), (byte)'C', TypeTransformer.SerializeColor, TypeTransformer.DeserializeColor);
     }
 
     void Update()
     {
         PlayerJump();
         PlayerAttack();
+
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+            setNewColorPlayer(Color.red);
+        }
+
         //m_PV.RPC("PlayerAttack", RpcTarget.AllBuffered);
 
         /*switch (playerCurrentState)
@@ -65,6 +76,28 @@ public class PlayerController : MonoBehaviour
                 PlayerMovement();
                 break;
         }*/
+    }
+
+    void setNewColorPlayer(Color p_newColor)
+    {
+        gameObject.GetComponent<SpriteRenderer>().color = p_newColor;
+
+        if (m_PV.IsMine)
+        {
+            Hashtable playerProperties = new Hashtable();
+            playerProperties["playerColor"] = p_newColor;
+            PhotonNetwork.LocalPlayer.SetCustomProperties(playerProperties);
+        }
+    }
+
+    // Esta es para que, cuando se llame a una función, lo que hacen estas funciones, se llaman automáticamente.
+    // En este caso, esta se le manda a todos los que andan en la partida.
+    public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
+    {
+        if(!m_PV.IsMine && targetPlayer == m_PV.Owner)
+        {
+            setNewColorPlayer((Color)changedProps["playerColor"]);
+        }
     }
 
     private void FixedUpdate()
